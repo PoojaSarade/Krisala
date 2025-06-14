@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeMenu = document.getElementById('closeMenu');
     const navLinks = document.getElementById('navLinks');
     const navLinksItems = document.querySelectorAll('.nav-link');
-    const contactFormApiUrl = 'https://p7hjkeqa74.execute-api.eu-north-1.amazonaws.com/prod/contactform';
+   
     
     // Show mobile menu
     menuIcon.addEventListener('click', function() {
@@ -239,48 +239,6 @@ priceForm.addEventListener('submit', function(event) {
     handleFormSubmission(event, 'priceForm');
 });
 
-// Function to handle form submission
-function handleFormSubmission(event, formId) {
-    event.preventDefault();
-    const formData = new FormData(document.getElementById(formId));
-    const formDataObj = {};
-
-    // Convert FormData to object
-    for (const [key, value] of formData.entries()) {
-        formDataObj[key] = value;
-    }
-    // Set default message if empty
-    formDataObj.message = formDataObj.message?.trim() || "I am interested in Krisala Codename Big Heart.";
-
-    // Send data to server
-    fetch(contactFormApiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formDataObj),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Form submitted successfully:', data);
-        alert('Thank you for your submission! We will contact you shortly.');
-        
-        // Reset form and close modal 
-        if (formId === 'brochureForm') {
-            brochureForm.reset();
-            brochureModal.style.display = 'none';
-        } else if (formId === 'priceForm') {
-            priceForm.reset();
-            priceModal.style.display = 'none';
-        } else if (formId === 'inquiry-form') {
-            inquiryForm.reset();
-        }
-    })
-    .catch(error => {
-        console.error('Error submitting form:', error);
-        alert('There was an error submitting your form. Please try again later.');
-    });
-}
     
     // Form Submission
     
